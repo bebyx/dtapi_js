@@ -1,7 +1,3 @@
-// add Dockerfile to github repository as well as Jenkinsfile
-// delete local fe image if needed — build, tag and push to eu.gc.io registry
-
-
 pipeline {
     agent any
 
