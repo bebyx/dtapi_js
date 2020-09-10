@@ -39,7 +39,7 @@ pipeline {
                 //Build and push image, re-run k8s container
                 sh '''
                 docker images | grep fe-local && docker rmi fe-local
-                docker -t fe-local .
+                docker build -t fe-local .
                 docker build tag fe-local eu.gcr.io/trainingground-285720/fe
                 docker build push eu.gcr.io/trainingground-285720/fe
                 kubectl replace -f ./building/fe-deployment.yaml
