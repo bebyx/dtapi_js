@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        HOST = 'bebyx.ssh.if.ua'
+        GCR = 'eu.gcr.io/trainingground-285720/fe'
+    }
 
     stages {
         stage('Prepare') {
@@ -8,8 +12,8 @@ pipeline {
                 sh '/usr/bin/npm install'
 
                 //Set environment
-                sh 'sed -i "s|https://dtapi.if.ua/api/|http://bebyx.ssh.if.ua/api/|" src/environments/environment.ts'
-                sh 'sed -i "s|https://dtapi.if.ua/api/|http://bebyx.ssh.if.ua/api/|" src/environments/environment.ts'
+                sh 'sed -i "s|https://dtapi.if.ua/api/|http://${HOST}/api/|" src/environments/environment.ts'
+                sh 'sed -i "s|https://dtapi.if.ua/api/|http://${HOST}/api/|" src/environments/environment.ts'
 
             }
         }
@@ -36,8 +40,8 @@ pipeline {
                 sh '''
                 docker images | grep fe-local && docker rmi fe-local
                 docker build -t fe-local .
-                docker tag fe-local eu.gcr.io/trainingground-285720/fe
-                docker push eu.gcr.io/trainingground-285720/fe
+                docker tag fe-local ${GCR}
+                docker push ${GCR}
                 kubectl replace -f ./building/fe-deployment.yaml
                 '''
             }
