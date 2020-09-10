@@ -29,7 +29,7 @@ pipeline {
             steps {
                 //Build artefacts
                 sh '/usr/local/bin/ng build'
-                sh 'cp ./htaccess_example_fe ./dist/IF105/.htaccess'
+                sh 'cp ./building/htaccess_example_fe ./dist/IF105/.htaccess'
             }
 
         }
